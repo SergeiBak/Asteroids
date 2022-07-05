@@ -1,2 +1,2 @@
 # Asteroids
-<In progress>
+In progress
