@@ -68,6 +68,9 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
+        lives = 3;
+        score = 0;
 
+        Invoke(nameof(Respawn), respawnTime);
     }
 }
