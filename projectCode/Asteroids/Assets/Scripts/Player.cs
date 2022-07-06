@@ -5,6 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
+    private Bullet bulletPrefab;
+
+    [SerializeField]
     private float thrustSpeed = 1f;
     [SerializeField]
     private float turnSpeed = 1f;
@@ -35,6 +38,11 @@ public class Player : MonoBehaviour
         {
             turnDirection = 0;
         }
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        {
+            Shoot();
+        }
     }
 
     private void FixedUpdate()
@@ -48,5 +56,11 @@ public class Player : MonoBehaviour
         {
             rb.AddTorque(turnDirection * turnSpeed);
         }
+    }
+
+    private void Shoot()
+    {
+        Bullet bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        bullet.Project(transform.up);
     }
 }
