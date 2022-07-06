@@ -9,12 +9,13 @@ public class Asteroid : MonoBehaviour
     private SpriteRenderer sr;
     private Rigidbody2D rb;
 
+    public float size = 1f;
+    public float minSize = 0.5f;
+    public float maxSize = 1.5f;
     [SerializeField]
-    private float size = 1f;
+    private float speed = 50f;
     [SerializeField]
-    private float minSize = 0.5f;
-    [SerializeField]
-    private float maxSize = 1.5f;
+    private float lifetime = 30f;
 
     private void Awake()
     {
@@ -30,5 +31,12 @@ public class Asteroid : MonoBehaviour
         transform.localScale = Vector3.one * size;
 
         rb.mass = size;
+    }
+
+    public void SetTrajectory(Vector2 direction)
+    {
+        rb.AddForce(direction * speed);
+
+        Destroy(gameObject, lifetime);
     }
 }
