@@ -7,14 +7,27 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Player player;
     [SerializeField]
+    private ParticleSystem explosion;
+
+    [SerializeField]
     private int lives = 3;
+    private int score;
     [SerializeField]
     private float respawnInvulnerabilityTime = 3f;
     [SerializeField]
     private float respawnTime = 3f;
 
+    public void AsteroidDestroyed(Asteroid asteroid)
+    {
+        explosion.transform.position = asteroid.transform.position;
+        explosion.Play();
+    }
+
     public void PlayerDied()
     {
+        explosion.transform.position = player.transform.position;
+        explosion.Play();
+
         lives--;
 
         if (lives <= 0)
