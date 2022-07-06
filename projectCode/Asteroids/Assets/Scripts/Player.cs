@@ -16,9 +16,11 @@ public class Player : MonoBehaviour
     private float turnDirection;
 
     private Rigidbody2D rb;
+    private GameManager gm;
 
     private void Awake()
     {
+        gm = FindObjectOfType<GameManager>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -62,5 +64,18 @@ public class Player : MonoBehaviour
     {
         Bullet bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
         bullet.Project(transform.up);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Asteroid")
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = 0f;
+
+            gameObject.SetActive(false);
+
+            gm.PlayerDied();
+        }
     }
 }
