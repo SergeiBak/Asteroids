@@ -21,7 +21,13 @@ In order to play this version of Asteroids, follow the [link](https://sergeibak.
 
 ## Code
 A brief description of all of the classes is as follows:
+- The `Asteroid` class handles the movement & spawning of the asteroids.
+- The `AsteroidSpawner` class continuously spawns asteroids.
+- The `AudioManager` class handles all of the audio for the game.
+- The `Boundary` class allows the player to teleport to the other side of the screen when running into a boundary.
+- The `Bullet` class handles the movement & collision of the projectiles fired by the player.
 - The `GameManager` class handles the state of the game, as well as tracking score & lives, and updating UI.
+- The `Player` class handles player movement, shooting, and dying.
 
 ## Technologies
 - Unity
