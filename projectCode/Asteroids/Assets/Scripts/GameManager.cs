@@ -26,6 +26,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject gameOverPopup;
 
+    private int extraLifeCount = 10000;
+    private int extraLifeScore = 10000;
+
+    [SerializeField]
+    private AudioManager am;
+
     private void Start()
     {
         UpdateScoreText();
@@ -51,14 +57,25 @@ public class GameManager : MonoBehaviour
         if (asteroid.size < 0.75f)
         {
             score += 100;
+            am.PlaySmallExplosionSound();
         }
         else if (asteroid.size < 1.2)
         {
             score += 50;
+            am.PlayMediumExplosionSound();
         }
         else
         {
             score += 25;
+            am.PlayLargeExplosionSound();
+        }
+
+        if (score >= extraLifeCount)
+        {
+            am.PlayExtraShipSound();
+            extraLifeCount += extraLifeScore;
+            lives++;
+            UpdateLifeIcons();
         }
 
         UpdateScoreText();
@@ -66,6 +83,36 @@ public class GameManager : MonoBehaviour
 
     private void UpdateScoreText()
     {
+        int remainder = score % 10000;
+        if (remainder < 1000)
+        {
+            am.beatRate = 1f;
+        }
+        else if (remainder < 2000)
+        {
+            am.beatRate = 0.8f;
+        }
+        else if (remainder < 3000)
+        {
+            am.beatRate = 0.7f;
+        }
+        else if (remainder < 4000)
+        {
+            am.beatRate = 0.6f;
+        }
+        else if (remainder < 5000)
+        {
+            am.beatRate = 0.5f;
+        }
+        else if (remainder < 8000)
+        {
+            am.beatRate = 0.4f;
+        }
+        else
+        {
+            am.beatRate = 0.3f;
+        }
+
         scoreText.text = score.ToString();
     }
 
@@ -73,6 +120,7 @@ public class GameManager : MonoBehaviour
     {
         explosion.transform.position = player.transform.position;
         explosion.Play();
+        am.PlayMediumExplosionSound();
 
         lives--;
 
@@ -127,6 +175,7 @@ public class GameManager : MonoBehaviour
     {
         lives = 3;
         score = 0;
+        extraLifeCount = extraLifeScore;
 
         gameOverPopup.SetActive(true);
         gameOver = true;

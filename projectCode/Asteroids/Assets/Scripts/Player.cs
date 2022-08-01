@@ -17,10 +17,12 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb;
     private GameManager gm;
+    private AudioManager am;
 
     private void Awake()
     {
         gm = FindObjectOfType<GameManager>();
+        am = FindObjectOfType<AudioManager>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -64,6 +66,8 @@ public class Player : MonoBehaviour
     {
         Bullet bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
         bullet.Project(transform.up);
+
+        am.PlayPlayerShootSound();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
